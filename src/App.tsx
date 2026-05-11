@@ -7,6 +7,7 @@ import { ToolsList } from './pages/ToolsList';
 import { ToolPage } from './pages/ToolPage';
 import { BlogList } from './pages/BlogList';
 import { BlogPostDetail } from './pages/BlogPostDetail';
+import { Sitemap } from './pages/Sitemap';
 import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="/tool/:toolId" element={<ToolPage />} />
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/:slug" element={<BlogPostDetail />} />
+            <Route path="/sitemap" element={<Sitemap />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
