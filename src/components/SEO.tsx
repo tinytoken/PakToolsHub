@@ -10,14 +10,14 @@ interface SEOProps {
 }
 
 export const SEO: React.FC<SEOProps> = ({ 
-  title = "PakToolsHub - Free Online Tools for Pakistan", 
+  title = "Pak Tools Hub - Free Online Tools for Pakistan", 
   description = "Free online calculators, student tools, PDF tools, image tools, and Pakistan utility tools with fast and mobile-friendly design.",
   canonical,
   ogImage,
   schema
 }) => {
   const metaEnv = (import.meta as any).env;
-  const siteUrl = metaEnv?.VITE_APP_URL || 'https://paktoolshub.com';
+  const siteUrl = metaEnv?.VITE_APP_URL || 'https://pak-tools-hub.vercel.app/';
   const fullTitle = title.includes('PakToolsHub') ? title : `${title} | PakToolsHub`;
 
   return (
