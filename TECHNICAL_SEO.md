@@ -1,0 +1,84 @@
+# PakToolsHub: Technical SEO Production Guide
+**Status:** Production Ready
+**Architect:** Senior Technical SEO Specialist
+
+## 1. Robots.txt Strategy
+We use a hierarchical `robots.txt` to optimize crawl budget.
+- **Priority:** Allow `/tool/` and `/blog/` paths.
+- **Hygiene:** Disallow common tracking parameters (fbclid, utm, gclid) to prevent index bloat.
+- **AI Safety:** Implemented `CCBot` disallow to protect original content from unauthorized AI training scraping.
+
+## 2. Dynamic Sitemap.xml
+Our sitemap is generated on-the-fly in `server.ts` to ensure new tools/blogs are indexed immediately.
+- **Frequency:** Home & Tools are set to `daily`.
+- **Weighting:**
+  - `1.0`: Homepage
+  - `0.9`: Individual Tools (`/tool/*`)
+  - `0.8`: Blog Posts (`/blog/*`)
+  - `0.7`: Category Pages (`/category/*`)
+
+## 3. SEO-Friendly URL Structure
+- **Tools:** `https://paktoolshub.com/tool/{id}`
+- **Blogs:** `https://paktoolshub.com/blog/{slug}`
+- **Categories:** `https://paktoolshub.com/category/{id}`
+
+## 4. Google Search Console Setup
+**Action Required:**
+1. Log in to [Google Search Console](https://search.google.com/search-console).
+2. Add Property: `https://paktoolshub.com`.
+3. Submit Sitemap: Enter `https://paktoolshub.com/sitemap.xml`.
+4. Verify via DNS or HTML tag.
+
+## 5. IndexNow Integration
+For professional tool websites, we recommend IndexNow to notify Bing/Yandex of updates instantly.
+- **Endpoint:** [IndexNow API](https://www.bing.com/indexnow).
+- **Automation:** Can be added as a post-build script in `package.json`.
+
+## 6. Canonical Strategy
+- **React Helmet:** Every page uses a canonical tag pointing to its primary URL to prevent duplicate content issues caused by trailing slashes or parameters.
+
+## 7. Mobile-First Indexing
+- **Viewport:** All tools use `width=device-width, initial-scale=1`.
+- **Responsive Images:** All images use `loading="lazy"` and proper ALT text.
+- **Cumulative Layout Shift (CLS):** Tool containers have pre-defined heights to prevent layout jumping during JS initialization.
+
+---
+## 8. Next.js Migration Reference (App Router)
+
+If you migrate to **Next.js**, use these file patterns:
+
+### `app/robots.ts`
+```typescript
+import { MetadataRoute } from 'next'
+ 
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: {
+      userAgent: '*',
+      allow: '/',
+      disallow: ['/api/', '/admin/'],
+    },
+    sitemap: 'https://paktoolshub.com/sitemap.xml',
+  }
+}
+```
+
+### `app/sitemap.ts`
+```typescript
+import { MetadataRoute } from 'next'
+ 
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    {
+      url: 'https://paktoolshub.com',
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 1,
+    },
+    // Dynamically map your tools and blogs here
+  ]
+}
+```
+
+---
+**Next Step:** Monitor Search Console for "Discovery" vs "Crawled" status and adjust priority weights if necessary.

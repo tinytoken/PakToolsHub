@@ -13,34 +13,70 @@ async function startServer() {
   // Special files
   app.get("/robots.txt", (req, res) => {
     res.type("text/plain");
-    res.send("User-agent: *\nAllow: /\nSitemap: https://paktoolshub.com/sitemap.xml");
+    res.send(`User-agent: *
+Allow: /
+Allow: /tools
+Allow: /blog
+Allow: /category
+Disallow: /api/
+Disallow: /dist/
+Disallow: /node_modules/
+Disallow: /*?fbclid=
+Disallow: /*?utm_
+Disallow: /*?gclid=
+
+# Specifically allow professional tools
+Allow: /tool/
+
+# Sitemap location
+Sitemap: https://paktoolshub.com/sitemap.xml
+
+# Prevent AI scrapers from high-frequency crawl (Optional but recommended)
+User-agent: CCBot
+Disallow: /
+`);
   });
 
   app.get("/sitemap.xml", (req, res) => {
     res.type("application/xml");
     const baseUrl = "https://paktoolshub.com";
-    const pages = [
-      "",
-      "/tools",
-      "/blog",
-      "/about",
-      "/contact",
-      "/privacy",
-      "/disclaimer",
-      "/terms",
-      "/refund",
-      "/dmca",
-      "/cookies",
-      "/accessibility",
+    const lastMod = new Date().toISOString().split('T')[0];
+
+    const staticPages = [
+      { path: "", priority: "1.0", freq: "daily" },
+      { path: "/tools", priority: "0.9", freq: "daily" },
+      { path: "/blog", priority: "0.8", freq: "daily" },
+      { path: "/about", priority: "0.5", freq: "monthly" },
+      { path: "/contact", priority: "0.5", freq: "monthly" },
+      { path: "/privacy", priority: "0.3", freq: "monthly" },
+      { path: "/terms", priority: "0.3", freq: "monthly" }
+    ];
+
+    const categories = [
       "/category/calculators",
       "/category/students",
       "/category/pakistan",
       "/category/pdf",
-      "/category/seo",
+      "/category/image",
+      "/category/seo"
+    ];
+
+    const tools = [
       "/tool/age-calculator",
       "/tool/zakat-calculator",
       "/tool/salary-tax",
       "/tool/cgpa-calculator",
+      "/tool/matric-percentage",
+      "/tool/loan-emi",
+      "/tool/electricity-bill",
+      "/tool/image-compressor",
+      "/tool/jpg-to-png",
+      "/tool/pdf-merge",
+      "/tool/word-counter",
+      "/tool/meta-generator"
+    ];
+
+    const blogs = [
       "/blog/how-to-calculate-cgpa-pakistan",
       "/blog/fbr-salary-tax-guide-2024-25",
       "/blog/how-to-compress-images-without-losing-quality",
@@ -54,13 +90,34 @@ async function startServer() {
     ];
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ${pages.map(page => `
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  ${staticPages.map(p => `
   <url>
-    <loc>${baseUrl}${page}</loc>
-    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>${page === "" ? "daily" : "weekly"}</changefreq>
-    <priority>${page === "" ? "1.0" : page.startsWith("/tool") ? "0.9" : "0.7"}</priority>
+    <loc>${baseUrl}${p.path}</loc>
+    <lastmod>${lastMod}</lastmod>
+    <changefreq>${p.freq}</changefreq>
+    <priority>${p.priority}</priority>
+  </url>`).join('')}
+  ${categories.map(path => `
+  <url>
+    <loc>${baseUrl}${path}</loc>
+    <lastmod>${lastMod}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>`).join('')}
+  ${tools.map(path => `
+  <url>
+    <loc>${baseUrl}${path}</loc>
+    <lastmod>${lastMod}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>`).join('')}
+  ${blogs.map(path => `
+  <url>
+    <loc>${baseUrl}${path}</loc>
+    <lastmod>${lastMod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>`).join('')}
 </urlset>`;
     res.send(xml);
