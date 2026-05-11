@@ -1,48 +1,52 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowRight, Search, Zap, Shield, Sparkles, Wrench } from 'lucide-react';
+import { ArrowRight, Search, Sparkles } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import { CATEGORIES, TOOLS } from '../data/tools';
 import { ToolCard } from '../components/ToolCard';
+import { SaaSBenefits } from '../components/SaaSBenefits';
 
 export const Home = () => {
   const [search, setSearch] = React.useState('');
-  const featuredTools = TOOLS.slice(0, 6);
+  const featuredTools = TOOLS.filter(t => !t.category || t.category === 'calculators').slice(0, 4);
 
   return (
     <div className="relative">
-      <SEO title="Home" />
+      <SEO title="Free Online Tools for Pakistan - PakToolsHub" description="The complete digital utility hub for students, freelancers, and citizens in Pakistan. Accuracy, speed, and privacy guaranteed." />
       
       {/* Hero Section */}
-      <section className="relative pt-12 pb-16 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-8 text-center space-y-6">
+      <section className="relative pt-20 pb-24 overflow-hidden bg-slate-50 dark:bg-gray-900/30">
+        <div className="max-w-7xl mx-auto px-8 text-center space-y-8">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 font-bold text-[10px] uppercase tracking-widest border border-indigo-100 dark:border-indigo-900/30"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 font-bold text-[10px] uppercase tracking-widest border border-indigo-100 dark:border-indigo-900/30"
           >
             <Sparkles className="w-3 h-3" />
-            Pakistan's #1 Utility Hub
+            Pakistan's Premium Utility Hub
           </motion.div>
           
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight"
-          >
-            Free Online Tools for <span className="text-indigo-600">Pakistan</span>
-          </motion.h1>
+          <div className="space-y-4">
+            <motion.h1
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-none"
+            >
+              Precision Tools for <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-indigo-400">Digital Pakistan</span>
+            </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="max-w-2xl mx-auto text-sm text-slate-500 dark:text-slate-400 leading-relaxed"
-          >
-            The complete utility hub for students, professionals, and citizens. 
-            SEO optimized, mobile-first, and 100% free to use.
-          </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="max-w-2xl mx-auto text-lg text-slate-500 dark:text-slate-400 leading-relaxed font-medium"
+            >
+              The most reliable utility hub for students, professionals, and citizens. 
+              100% Free, Secure, and Built for High Performance.
+            </motion.p>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -52,42 +56,32 @@ export const Home = () => {
           >
             <input 
               type="text"
-              placeholder="Search for Age Calculator, Zakat, PDF tools..."
+              placeholder="Search 100+ professional tools..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-5 py-3 rounded-xl border border-slate-200 dark:border-gray-800 shadow-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none pr-12 dark:bg-gray-900 dark:text-white text-sm"
+              className="w-full px-6 py-4 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-xl shadow-indigo-500/5 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none pr-14 dark:bg-gray-900 dark:text-white text-base transition-all"
             />
-            <div className="absolute right-4 top-3 text-slate-400 group-focus-within:text-indigo-600 transition-colors">
-              <Search className="w-5 h-5" />
+            <div className="absolute right-5 top-4 text-slate-400 group-focus-within:text-indigo-600 transition-colors">
+              <Search className="w-6 h-6" />
             </div>
-          </motion.div>
-
-          {/* Ad Slot Placeholder from Design */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="h-20 bg-indigo-50/50 dark:bg-indigo-900/10 border border-dashed border-indigo-200 dark:border-indigo-900/30 rounded-xl flex items-center justify-center max-w-4xl mx-auto"
-          >
-            <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-[0.2em]">Sponsorship / Adsense Slot</span>
           </motion.div>
         </div>
       </section>
 
-      {/* Categories Grid */}
-      <section className="py-16 bg-white dark:bg-gray-950 transition-colors border-y border-slate-100 dark:border-gray-900">
+      {/* Categories Horizontal Scroll or Grid */}
+      <section className="py-24 bg-white dark:bg-gray-950 transition-colors border-y border-slate-100 dark:border-gray-900">
         <div className="max-w-7xl mx-auto px-8">
-          <div className="flex justify-between items-end mb-12">
-            <div>
-              <h2 className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">Tool categories</h2>
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Explore our workspace</h3>
+          <div className="flex justify-between items-end mb-16">
+            <div className="space-y-2">
+              <h2 className="text-xs font-bold text-slate-400 uppercase tracking-[0.3em]">Workspace</h2>
+              <h3 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Browse by Category</h3>
             </div>
-            <Link to="/tools" className="text-xs font-bold text-indigo-600 uppercase tracking-wider flex items-center gap-1 hover:gap-2 transition-all">
-              View all <ArrowRight className="w-3 h-3" />
+            <Link to="/tools" className="group text-sm font-bold text-indigo-600 flex items-center gap-2 hover:gap-3 transition-all">
+              EXPLORE ALL TOOLS <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {CATEGORIES.map((cat, i) => (
               <motion.div
                 key={cat.id}
@@ -96,14 +90,14 @@ export const Home = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
               >
-                <Link to={`/category/${cat.id}`} className="block group p-6 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-gray-800 hover:border-indigo-300 dark:hover:border-indigo-900 transition-all hover:shadow-lg hover:shadow-indigo-500/5">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-sm font-bold text-slate-800 dark:text-white group-hover:text-indigo-600 transition-colors">{cat.name}</h3>
-                    <div className="p-1.5 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-slate-100 dark:border-gray-800 group-hover:bg-indigo-600 group-hover:text-white transition-all">
-                      <ArrowRight className="w-4 h-4" />
+                <Link to={`/category/${cat.id}`} className="block group p-8 bg-slate-50 dark:bg-slate-900/50 rounded-3xl border border-slate-200 dark:border-gray-800 hover:border-indigo-500/30 transition-all hover:shadow-2xl hover:shadow-indigo-500/10">
+                  <div className="flex justify-between items-center mb-6">
+                    <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-2xl flex items-center justify-center shadow-sm border border-slate-100 dark:border-gray-800 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                      <ArrowRight className="w-5 h-5" />
                     </div>
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{cat.description}</p>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{cat.name}</h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">{cat.description}</p>
                 </Link>
               </motion.div>
             ))}
@@ -111,47 +105,49 @@ export const Home = () => {
         </div>
       </section>
 
+      {/* EEAT Benefits Section */}
+      <SaaSBenefits />
+
       {/* Popular Tools */}
-      <section className="py-16 bg-slate-50 dark:bg-gray-900/20 transition-colors">
+      <section className="py-24 bg-slate-50 dark:bg-gray-900/30 transition-colors">
         <div className="max-w-7xl mx-auto px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">Most used utilities</h2>
-            <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Daily Essentials</h3>
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-xs font-bold text-slate-400 uppercase tracking-[0.3em]">The Registry</h2>
+            <h3 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Most Popular Tools</h3>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredTools.map((tool, i) => (
-              <ToolCard key={tool.id} tool={tool} />
+              <ToolCard key={tool.id} tool={tool} featured={i < 2} />
             ))}
+          </div>
+
+          <div className="mt-16 text-center">
+            <Link to="/tools" className="inline-flex items-center gap-4 px-8 py-4 bg-slate-900 dark:bg-indigo-600 text-white font-bold rounded-2xl hover:scale-105 transition-transform shadow-xl shadow-slate-900/20">
+              View Entire Collection <ArrowRight className="w-5 h-5" />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="p-6 rounded-2xl bg-white dark:bg-gray-900 border border-slate-100 dark:border-gray-800 shadow-sm">
-              <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 rounded-lg flex items-center justify-center mb-4">
-                <Zap className="w-5 h-5" />
-              </div>
-              <h3 className="text-sm font-bold mb-2 dark:text-white">Lightning Fast</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Calculations and processing happen in real-time, right in your browser.</p>
-            </div>
-            <div className="p-6 rounded-2xl bg-white dark:bg-gray-900 border border-slate-100 dark:border-gray-800 shadow-sm">
-              <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 rounded-lg flex items-center justify-center mb-4">
-                <Shield className="w-5 h-5" />
-              </div>
-              <h3 className="text-sm font-bold mb-2 dark:text-white">Privacy First</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Your data never leaves your device. We don't store your sensitive inputs.</p>
-            </div>
-            <div className="p-6 rounded-2xl bg-white dark:bg-gray-900 border border-slate-100 dark:border-gray-800 shadow-sm">
-              <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 rounded-lg flex items-center justify-center mb-4">
-                <Wrench className="w-5 h-5" />
-              </div>
-              <h3 className="text-sm font-bold mb-2 dark:text-white">Updated Daily</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Tax laws, gold rates, and university standards are updated regularly.</p>
-            </div>
+      {/* Final SEO CTA */}
+      <section className="py-24 bg-indigo-600 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div className="max-w-4xl mx-auto px-8 text-center relative z-10 space-y-8">
+          <h2 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight">
+            Ready to streamline your <br/>
+            digital workflow?
+          </h2>
+          <p className="text-indigo-100 text-lg font-medium opacity-90 max-w-xl mx-auto">
+            Join thousands of Pakistani students and professionals using PakToolsHub to work smarter every day.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            <Link to="/tools" className="px-10 py-4 bg-white text-indigo-600 font-black rounded-2xl hover:shadow-2xl transition-all uppercase tracking-wider text-xs">
+              Go to Tools
+            </Link>
+            <Link to="/contact" className="px-10 py-4 bg-indigo-500 text-white font-black rounded-2xl hover:bg-indigo-400 transition-all uppercase tracking-wider text-xs border border-white/20">
+              Request a Tool
+            </Link>
           </div>
         </div>
       </section>

@@ -18,15 +18,42 @@ async function startServer() {
 
   app.get("/sitemap.xml", (req, res) => {
     res.type("application/xml");
-    res.send(`<?xml version="1.0" encoding="UTF-8"?>
+    const baseUrl = "https://paktoolshub.com";
+    const pages = [
+      "",
+      "/tools",
+      "/blog",
+      "/about",
+      "/contact",
+      "/privacy",
+      "/disclaimer",
+      "/terms",
+      "/refund",
+      "/dmca",
+      "/cookies",
+      "/accessibility",
+      "/category/calculators",
+      "/category/students",
+      "/category/pakistan",
+      "/category/pdf",
+      "/category/seo",
+      "/tool/age-calculator",
+      "/tool/zakat-calculator",
+      "/tool/salary-tax",
+      "/tool/cgpa-calculator"
+    ];
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://paktoolshub.com/</loc></url>
-  <url><loc>https://paktoolshub.com/tools</loc></url>
-  <url><loc>https://paktoolshub.com/blog</loc></url>
-  <url><loc>https://paktoolshub.com/tool/age-calculator</loc></url>
-  <url><loc>https://paktoolshub.com/tool/cgpa-calculator</loc></url>
-  <url><loc>https://paktoolshub.com/tool/matric-percentage</loc></url>
-</urlset>`);
+  ${pages.map(page => `
+  <url>
+    <loc>${baseUrl}${page}</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>${page === "" ? "daily" : "weekly"}</changefreq>
+    <priority>${page === "" ? "1.0" : page.startsWith("/tool") ? "0.9" : "0.7"}</priority>
+  </url>`).join('')}
+</urlset>`;
+    res.send(xml);
   });
 
   // Vite middleware for development
