@@ -29,10 +29,12 @@ Disallow: /*?gclid=
 Allow: /tool/
 
 # Sitemap location
-Sitemap: https://paktoolshub.com/sitemap.xml
+Sitemap: https://pak-tools-hub.vercel.app/sitemap.xml
 
-# Prevent AI scrapers from high-frequency crawl (Optional but recommended)
+# Prevent AI scrapers from high-frequency crawl
 User-agent: CCBot
+Disallow: /
+User-agent: GPTBot
 Disallow: /
 `);
   });
