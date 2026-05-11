@@ -1,53 +1,65 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Breadcrumbs } from '../components/Breadcrumbs';
-import { BLOG_POSTS } from '../data/blog';
+import { Search } from 'lucide-react';
 import { SEO } from '../components/SEO';
-import { motion } from 'motion/react';
-import { Calendar, User, ArrowRight } from 'lucide-react';
+import { BLOG_POSTS } from '../data/blogs';
+import { BlogCard } from '../components/BlogCard';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 
 export const BlogList = () => {
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <SEO title="Blog" description="Read latest guides, tutorials and tips on using online tools and productivity." />
-      <Breadcrumbs items={[{ name: 'Blog', path: '/blog' }]} />
-      
-      <div className="mb-16 text-center">
-        <h1 className="text-5xl font-black dark:text-white mb-4">Latest Insights</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-400">Master the web with our expert guides and tools tips.</p>
-      </div>
+  const [search, setSearch] = React.useState('');
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-        {BLOG_POSTS.map((post, i) => (
-          <motion.article 
-            key={post.slug}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className="group cursor-pointer"
-          >
-            <Link to={`/blog/${post.slug}`}>
-              <div className="aspect-[16/10] bg-gray-100 dark:bg-gray-800 rounded-3xl mb-6 overflow-hidden relative">
-                <div className="absolute inset-0 bg-gradient-to-tr from-indigo-600/20 to-transparent group-hover:opacity-100 opacity-0 transition-opacity" />
-                <div className="flex items-center justify-center h-full text-indigo-600/20 dark:text-indigo-400/10 font-bold text-4xl">PAK TOOL HUB</div>
-              </div>
-              <div className="flex items-center gap-4 text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-3">
-                <span>{post.category}</span>
-                <span className="w-1 h-1 bg-indigo-600 rounded-full" />
-                <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {post.date}</span>
-              </div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 transition-colors mb-3 leading-tight">
-                {post.title}
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6">
-                {post.excerpt}
-              </p>
-              <div className="flex items-center gap-2 text-gray-900 dark:text-white font-bold group-hover:gap-4 transition-all">
-                Read Story <ArrowRight className="w-4 h-4" />
-              </div>
-            </Link>
-          </motion.article>
-        ))}
+  const filteredPosts = BLOG_POSTS.filter(post => 
+    post.title.toLowerCase().includes(search.toLowerCase()) || 
+    post.metaDescription.toLowerCase().includes(search.toLowerCase()) ||
+    post.category.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div className="max-w-7xl mx-auto py-8">
+      <SEO 
+        title="PakToolsHub Blog - Expert Guides & Digital Utility Tips" 
+        description="Master your digital workflow with expert guides on SEO, student utilities, financial planning in Pakistan, and professional image optimization." 
+      />
+
+      <Breadcrumbs items={[{ name: 'Blog', path: '/blog' }]} />
+
+      <div className="px-8 mt-12 space-y-12">
+        <div className="max-w-3xl space-y-4">
+          <h1 className="text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-none">
+            Digital Wisdom for <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-indigo-400">Better Productivity</span>
+          </h1>
+          <p className="text-lg text-slate-500 dark:text-slate-400 font-medium">
+            Explore our library of expert-written guides designed to help you navigate the 
+            complexity of modern academics, finance, and SEO.
+          </p>
+        </div>
+
+        <div className="max-w-xl relative group">
+          <input 
+            type="text"
+            placeholder="Search guides and tutorials..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full px-5 py-3 rounded-xl border border-slate-200 dark:border-gray-800 shadow-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none pr-12 dark:bg-gray-900 dark:text-white text-sm"
+          />
+          <div className="absolute right-4 top-3 text-slate-400 group-focus-within:text-indigo-600 transition-colors">
+            <Search className="w-5 h-5" />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredPosts.map((post) => (
+            <BlogCard key={post.id} post={post} />
+          ))}
+
+          {filteredPosts.length === 0 && (
+            <div className="col-span-full py-20 text-center">
+              <h3 className="text-xl font-bold dark:text-white">No guides found matching your search.</h3>
+              <p className="text-slate-500">Try using broader keywords or browse all categories.</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

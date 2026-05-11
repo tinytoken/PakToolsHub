@@ -6,6 +6,7 @@ import { Home } from './pages/Home';
 import { ToolsList } from './pages/ToolsList';
 import { ToolPage } from './pages/ToolPage';
 import { BlogList } from './pages/BlogList';
+import { BlogPostDetail } from './pages/BlogPostDetail';
 import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="/tools" element={<ToolsList />} />
             <Route path="/tool/:toolId" element={<ToolPage />} />
             <Route path="/blog" element={<BlogList />} />
+            <Route path="/blog/:slug" element={<BlogPostDetail />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />

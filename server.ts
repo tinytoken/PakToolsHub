@@ -40,7 +40,17 @@ async function startServer() {
       "/tool/age-calculator",
       "/tool/zakat-calculator",
       "/tool/salary-tax",
-      "/tool/cgpa-calculator"
+      "/tool/cgpa-calculator",
+      "/blog/how-to-calculate-cgpa-pakistan",
+      "/blog/fbr-salary-tax-guide-2024-25",
+      "/blog/how-to-compress-images-without-losing-quality",
+      "/blog/zakat-calculation-explained-pakistan",
+      "/blog/best-seo-tools-for-bloggers-2024",
+      "/blog/best-pdf-tools-online-2024",
+      "/blog/how-to-convert-jpg-to-png",
+      "/blog/best-productivity-tools-students",
+      "/blog/how-to-improve-website-seo",
+      "/blog/best-free-online-tools-2026"
     ];
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
